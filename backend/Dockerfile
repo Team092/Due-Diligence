@@ -9,5 +9,5 @@ COPY requirements.txt .
 # 安装 Python 依赖
 RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-# CMD 由 docker-compose.yml 中的 command 覆盖，保持不变
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
+# # CMD 由 docker-compose.yml 中的 command 覆盖，保持不变
+# CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
