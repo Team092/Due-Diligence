@@ -8,18 +8,26 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.12'
+
       - name: Install dependencies
-        run: pip install -r backend/requirements.txt
+        run: pip install -r requirements.txt
+
       - name: Run tests
-        run: pytest
+        run: pytest tests
+
       - name: Build Docker Image
         run: docker build -t research_due_diligence_web .
-      - name: Push Docker Image
-        run: docker-compose up -d
+
+      - name: Run Docker Compose
+        run: docker-compose -f docker-compose.yml up -d --build
