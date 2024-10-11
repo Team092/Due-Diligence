@@ -121,5 +121,4 @@ The Due Diligence Automation System aims to help users quickly and accurately re
   - All major functional test cases (e.g., company information queries, data processing, report generation) passed.
   - Performance testing shows that the system remains stable under high concurrent requests.
   - Security testing confirms that the system successfully defends against SQL injection and CSRF attacks.
-  - Some test cases need further optimization (e.g., the scraping speed for specific data sources can be improved).
-
+  - Some test cases need further optimization (e.g., the scraping speed for specific data sources can be improved)
