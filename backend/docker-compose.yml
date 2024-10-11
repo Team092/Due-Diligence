@@ -29,7 +29,7 @@ services:
     container_name: research_due_diligence_web
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
-      - .:/code  # 映射当前文件夹到容器内的 /code 目录
+      - .:/code  
     ports:
       - "8001:8000"
     depends_on:

@@ -1,4 +1,4 @@
-#风险评估相关模型
+
 from tortoise import fields, models
 
 class RiskCategory(models.Model):

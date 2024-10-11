@@ -59,7 +59,7 @@ async def read_users_me(current_user: User = Depends(get_current_user)):
 
 @auth_router.put("/password", response_model=UserResponse)
 async def change_password(password_change_request: PasswordChangeRequest):
-    # 检查用户名和邮箱是否匹配
+
     user = await User.get(username=password_change_request.username, email=password_change_request.email)
     if not user:
         raise HTTPException(
@@ -67,7 +67,7 @@ async def change_password(password_change_request: PasswordChangeRequest):
             detail="Username or email is incorrect."
         )
 
-    # 更新用户密码
+
     user.password = get_password_hash(password_change_request.new_password)
     await user.save()
     return UserResponse.model_validate(user)
