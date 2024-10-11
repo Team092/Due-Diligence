@@ -30,4 +30,4 @@ jobs:
         run: docker build -t research_due_diligence_web .
 
       - name: Run Docker Compose
-        run: docker-compose -f docker-compose.yml up -d --build
+        run: docker compose -f docker-compose.yml up -d --build
