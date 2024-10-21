@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <!-- Importing necessary CSS and JS libraries -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@2"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="togglePassword.js"></script>
+    <link rel="stylesheet" href="icon/iconfont.css">
+    <link rel="stylesheet" href="icon/email&code/iconfont.css">
+</head>
+
+<body>
+    <!-- Page heading -->
+    <div class="background">
+        <h1>Create Account</h1>
+    </div>
+
+    <!-- Links for existing users or help -->
+    <div class="input-box4">
+        <a href="index.html">Already have an account?</a>
+        <a href="needhelp.html" class="needhelp2">Need help?</a>
+    </div>
+
+    <!-- Registration form -->
+    <form id="registerForm">
+        <!-- Username input field -->
+        <div class="input-box1">
+            <i class="el-icon-user"></i>
+            <input type="text" class="username" name="username" placeholder="User Name" required>
+        </div>
+
+        <!-- Email input field -->
+        <div class="input-box1">
+            <span class="iconfont">&#xebca;</span>
+            <input type="email" class="username email" name="email" placeholder="Email Address" required>
+        </div>
+
+        <!-- Password input field with strength checker -->
+        <div class="input-box">
+            <i class="el-icon-lock"></i>
+            <input type="password" class="password" name="password" placeholder="Password" id="password"
+                oninput="checkPasswordStrength()" required>
+            <i class="iconfont icon-view-2" id="togglePassword" style="cursor: pointer;"></i>
+            <div id="password-strength"></div>
+        </div>
+
+        <script>
+            // Function to check the strength of the password entered
+            function checkPasswordStrength() {
+                const password = document.getElementById('password').value;
+                const strengthBar = document.getElementById('password-strength');
+                let strength = 0;
+
+                if (password.length >= 8) strength++;
+                if (/[A-Z]/.test(password)) strength++;
+                if (/[a-z]/.test(password)) strength++;
+                if (/[0-9]/.test(password)) strength++;
+                if (/[\W_]/.test(password)) strength++;
+
+                const messages = ["Very Weak", "Weak", "Moderate", "Strong", "Very Strong"];
+                strengthBar.textContent = `Password strength: ${messages[strength]}`;
+                strengthBar.style.color = ['#ff4d4f', '#ff7a45', '#ffa940', '#52c41a', '#237804'][strength];
+            }
+        </script>
+
+        <!-- Confirm password input field -->
+        <div class="input-box">
+            <i class="el-icon-lock"></i>
+            <input type="password" class="password" name="confirmPassword" placeholder="Confirm Password"
+                id="confirmPassword" oninput="checkPasswordMatch()" required>
+            <i class="iconfont icon-view-2" id="toggleConfirmPassword" style="cursor: pointer;"></i>
+            <div id="password-match"></div>
+        </div>
+
+        <script>
+            // Function to check if both passwords match
+            function checkPasswordMatch() {
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const matchMessage = document.getElementById('password-match');
+
+                if (password.length > 0 && confirmPassword.length > 0) {
+                    if (password === confirmPassword) {
+                        matchMessage.textContent = "Passwords match.";
+                        matchMessage.style.color = "#52c41a";
+                    } else {
+                        matchMessage.textContent = "Passwords do not match.";
+                        matchMessage.style.color = "#ff4d4f";
+                    }
+                } else {
+                    matchMessage.textContent = "";
+                }
+            }
+        </script>
+
+        <!-- Submit button for the form -->
+        <div class="input-box">
+            <input type="submit" class="login" name="login" value="NEXT">
+        </div>
+    </form>
+
+    <!-- Terms and Conditions agreement -->
+    <div class="input-box2">
+        <input type="checkbox" class="checkbox" name="checkbox" id="agreeTerms" required>
+        <label for="agreeTerms">By creating an account, you agree to the <span><a href="#">Term of Use</a></span> and
+            <span><a href="PrivacyPolicy.html">Privacy Policy</a></span>.</label>
+    </div>
+
+    <script>
+        // Adding an event listener for form submission
+        document.getElementById('registerForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevents page reload
+
+            const formData = new FormData(event.target);
+            const username = formData.get('username');
+            const email = formData.get('email');
+            const password = formData.get('password');
+            const confirmPassword = formData.get('confirmPassword');
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+
+            // Check if the terms and conditions checkbox is checked
+            if (!agreeTerms) {
+                alert('You must agree to the Terms of Use and Privacy Policy to create an account.');
+                return;
+            }
+
+            // Check if both passwords match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+
+            // Disable the submit button to prevent duplicate submissions
+            document.querySelector('.login').disabled = true;
+
+            // Send the registration data to the backend
+            fetch('http://localhost:8001/users/register', {
+                method: 'POST',
+                body: JSON.stringify({ username, email, password }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.detail || 'Bad Request'); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Account created successfully!');
+                    window.location.href = 'index.html'; // Redirect to login page
+                })
+                .catch(error => {
+                    console.error('Error:', error.message);
+                    alert(error.message || 'There was an error creating your account.');
+                })
+                .finally(() => {
+                    // Re-enable the submit button
+                    document.querySelector('.login').disabled = false;
+                });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -11,45 +11,154 @@
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="togglePassword.js"></script>
     <link rel="stylesheet" href="icon/iconfont.css">
-    <link rel="stylesheet" href="icon\email&code\iconfont.css">
+    <link rel="stylesheet" href="icon/email&code/iconfont.css">
 </head>
 
 <body>
     <div class="background">
-        <h1>Reset Your Password</h1>
-        <div class="createAcc">
-            <a href="signup.html" class="create">Create an account?</a>
-        </div>
+        <h1>Reset Password</h1>
     </div>
-
-    <div> 
-        <h4>Your new password must be different with previously used password.</h4>
+    <div>
+        <h4>No worries! Follow the instructions to reset your password.</h4>
     </div>
 
     <div class="input-box4">
-        <a href="needHelp.html" class="needhelp">Need help?</a>
-    </div>
-
-    <div class="input-box">
-        <i class="el-icon-lock"></i>
-        <input type="password" class="password" name="password" placeholder="Password" id="password">
-        <i class="iconfont icon-view-2" id="togglePassword" style="cursor: pointer;"></i>
-    </div>
-
-    <div class="input-box">
-        <i class="el-icon-lock"></i>
-        <input type="password" class="password" name="confirmPassword" placeholder="Confirm Password"
-            id="confirmPassword">
-        <i class="iconfont icon-view-2" id="toggleConfirmPassword" style="cursor: pointer;"></i>
-    </div>
-    <div class="input-box">
-        <input type="button" class="login next" name="next" value="RESET">
-    </div>
-
-    <div class="input-box3">
         <a href="index.html">Already have an account?</a>
+        <a href="needhelp.html" class="needhelp2">Need help?</a>
     </div>
 
+    <form id="resetPasswordForm">
+        <div class="input-box1">
+            <i class="el-icon-user"></i>
+            <input type="text" class="username" name="username" placeholder="User Name" required>
+        </div>
+
+        <div class="input-box1">
+            <span class="iconfont">&#xebca;</span>
+            <input type="email" class="username email" name="email" placeholder="Email Address" required>
+        </div>
+
+        <div class="input-box">
+            <i class="el-icon-lock"></i>
+            <input type="password" class="password" name="password" placeholder="New Password" id="password"
+                oninput="checkPasswordStrength()" required>
+            <i class="iconfont icon-view-2" id="togglePassword" style="cursor: pointer;"></i>
+            <div id="password-strength"></div>
+        </div>
+
+        <div class="input-box">
+            <i class="el-icon-lock"></i>
+            <input type="password" class="password" name="confirmPassword" placeholder="Confirm Password"
+                id="confirmPassword" oninput="checkPasswordMatch()" required>
+            <i class="iconfont icon-view-2" id="toggleConfirmPassword" style="cursor: pointer;"></i>
+            <div id="password-match"></div>
+        </div>
+
+        <div class="input-box">
+            <input type="submit" class="login" name="resetPassword" value="NEXT">
+        </div>
+    </form>
+
+    <div class="input-box2">
+        <input type="checkbox" class="checkbox" id="agreeTerms" name="checkbox" required>
+        <label for="agreeTerms">By resetting the password, you agree to the 
+            <span><a href="#">Term of Use</a></span> and
+            <span><a href="PrivacyPolicy.html">Privacy Policy</a></span>.
+        </label>
+    </div>
+
+    <script>
+        document.getElementById('resetPasswordForm').addEventListener('submit', async function (event) {
+            if (!this.checkValidity()) {
+                // 若验证失败，则显示浏览器默认的提示
+                return;
+            }
+
+            event.preventDefault(); // 阻止表单的默认提交行为
+
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            if (!agreeTerms) {
+                alert('You must agree to the Terms of Use and Privacy Policy to proceed.');
+                return;
+            }
+
+            const formData = new FormData(this);
+            const username = formData.get('username');
+            const email = formData.get('email');
+            const new_password = formData.get('confirmPassword');
+            const errorMessage = document.getElementById('password-match');
+            const token = localStorage.getItem('Token');
+
+            if (document.getElementById('password').value !== new_password) {
+                errorMessage.textContent = 'Passwords do not match.';
+                errorMessage.style.color = '#ff4d4f';
+                return;
+            } else {
+                errorMessage.textContent = '';
+            }
+
+            try {
+                const response = await fetch('http://localhost:8001/users/password', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        email: email,
+                        new_password: new_password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Password successfully reset!');
+                    window.location.href = 'reset2.html';
+                } else {
+                    alert(`Error resetting password: ${data.message || 'Unknown error'}`);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error resetting the password.');
+            }
+        });
+
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthBar = document.getElementById('password-strength');
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[\W_]/.test(password)) strength++;
+
+            const messages = ["Very Weak", "Weak", "Moderate", "Strong", "Very Strong"];
+            strengthBar.textContent = `Password strength: ${messages[strength]}`;
+            strengthBar.style.color = ['#ff4d4f', '#ff7a45', '#ffa940', '#52c41a', '#237804'][strength];
+        }
+
+        function checkPasswordMatch() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const matchMessage = document.getElementById('password-match');
+
+            if (password.length > 0 && confirmPassword.length > 0) {
+                if (password === confirmPassword) {
+                    matchMessage.textContent = "Passwords match.";
+                    matchMessage.style.color = "#52c41a";
+                } else {
+                    matchMessage.textContent = "Passwords do not match.";
+                    matchMessage.style.color = "#ff4d4f";
+                }
+            } else {
+                matchMessage.textContent = "";
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -2,9 +2,9 @@ body {
     position: relative;
     margin: 0;
     padding: 0;
-    background-image: url('background.jpg'); /* Set the background image */
-    background-size: cover; /* Make the background cover the entire area */
-    background-position: center -73px; /* Adjust the background position */
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center -73px;
 }
 
 body::before {
@@ -14,176 +14,170 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Place background layer behind other elements */
-    pointer-events: none; /* Prevent interaction with this background */
+    z-index: -1;
+    pointer-events: none;
 }
 
 h1 {
-    font-style: italic; /* Italic style for the heading */
-    font-weight: bold; /* Bold text for emphasis */
-    text-align: center; /* Center the heading */
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
     margin-top: 60px;
     margin-bottom: 150px;
-    text-shadow: 3px 3px 5px rgba(75, 72, 72, 0.5); /* Add shadow for depth */
+    text-shadow: 3px 3px 5px rgba(75, 72, 72, 0.5); 
 }
 
 h4 {
     font-style: italic;
-    font-size: 15px; /* Set font size */
-    text-align: center; /* Center the subheading */
+    font-size: 15px;
+    text-align: center;
     margin-top: -120px;
     margin-bottom: 100px;
-    color: rgba(20, 20, 20, 0.637); /* Set the text color with transparency */
+    color: rgba(20, 20, 20, 0.637);
 }
 
-.createAcc {
+.createacc {
     position: absolute;
-    top: -20px;
-    right: 270px;
-    margin-top: 10px; /* Position the "create account" button */
+    top: -20px; 
+    right: 270px; 
+    margin-top: 10px; 
 }
 
 .create {
     color: black;
-    padding: 10px; /* Style for the button */
+    padding: 10px; 
 }
 
 .input-box1, .input-box {
     position: relative;
     text-align: center;
     width: 400px;
-    margin: 20px auto; /* Center the input boxes */
+    margin: 20px auto; 
 }
 
 .username, .password {
-    width: 100%;
-    padding-left: 40px; /* Padding for the icon and text */
-    padding-right: 50px;
+    width: 100%; 
+    padding-left: 40px; 
+    padding-right: 50px; 
     height: 36px;
     border-radius: 12px;
-    border: 1px solid black; /* Add a border around inputs */
+    border: 1px solid black;
     font-weight: bold;
-    box-sizing: border-box;
-    text-align: left;
-    background-color: transparent; /* Transparent background for inputs */
+    box-sizing: border-box; 
+    text-align: left; 
+    background-color: transparent;
     outline: none;
 }
 
-.username:-webkit-autofill, .password:-webkit-autofill {
+.username:-webkit-autofill {
     -webkit-text-fill-color: inherit;
-    transition: background-color 5000s ease-in-out 0s; /* Preserve text color when autofilled */
+    transition: background-color 5000s ease-in-out 0s;
 }
 
-.input-box1 .el-icon-user, .input-box1 .iconfont, .input-box .iconfont, .input-box .el-icon-lock {
+.password:-webkit-autofill {
+    -webkit-text-fill-color: inherit;
+    transition: background-color 5000s ease-in-out 0s;
+    outline: none;
+}
+
+.username:-webkit-autofill {
+    -webkit-text-fill-color: inherit;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.password:-webkit-autofill {
+    -webkit-text-fill-color: inherit;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.input-box1 .el-icon-user,
+.input-box1 .iconfont,
+.input-box .iconfont,
+.input-box .el-icon-lock {
     position: absolute;
-    left: 10px;
+    left: 10px; 
     top: 50%;
-    transform: translateY(-50%); /* Position icons vertically centered */
+    transform: translateY(-50%); 
     color: black;
-    font-size: 16px; /* Size of the icons */
+    font-size: 16px;
 }
 
-.send-code-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 30px;
-    background-color: lightgrey; /* Default background color */
-    font-weight: bold;
-    color: rgb(7, 7, 7); /* Text color */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 0 10px; /* Padding for the button */
-}
-
-.send-code-btn:hover {
-    background-color: #2878c3; /* Hover state for send code button */
-}
-
-.login:hover, .login:focus {
-    background-color: #3892e6; /* Change background color on hover/focus */
-    box-shadow: 2px 4px 12px rgb(185, 184, 184); /* Add shadow effect */
+.login:hover, .login:focus{
+    background-color: #3892e6;
+    background-color: #3892e6;
+    box-shadow: 2px 4px 12px rgb(185, 184, 184);
 }
 
 .login {
-    width: 100%;
+    width: 100%; 
     height: 36px;
     border-radius: 12px;
     font-weight: bold;
-    background-color: rgba(135, 206, 250, 0.6); /* Semi-transparent background */
-    color: black;
-    cursor: pointer;
+    background-color: rgba(135, 206, 250, 0.6);
+    color: black; 
+    cursor: pointer; 
     text-align: center;
-    padding: 0;
+    padding: 0; 
     border: none;
     outline: none;
 }
 
-.input-box2 {
+.input-box2, .input-box3 {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-start;
-    margin-top: 20px; /* Position elements in a flex container */
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;      font-size: 13px;
+    font-weight: bold;
 }
 
 .checkbox {
-    margin-left: 762px;
+    margin: 0;
+    padding: 0 10px;
     vertical-align: middle;
-    cursor: pointer; /* Cursor changes to pointer for the checkbox */
+    margin-right: 10px;
 }
 
-label {
+.forgot-password {
     font-size: 13px;
     font-weight: bold;
     color: black;
-    vertical-align: middle;
-    margin-left: 4px; /* Label styling for checkbox */
+    text-decoration: none;
+}
+
+label {
+    display: flex;
+    font-size: 13px; 
+    font-weight: bold;
+    color: black; 
+    vertical-align: middle; 
+    margin-right: auto; 
 }
 
 .needhelp {
     font-weight: bold;
-    font-size: 13px;
+    font-size: 13px; 
     color: rgb(0, 0, 0);
     text-decoration: none;
-    margin-left: 315px; /* Help link positioning */
+    margin-left: 315px; 
 }
 
 .needhelp2 {
     display: inline-block;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 13px; 
     color: rgb(0, 0, 0);
     text-decoration: none;
-    position: relative;
-    top: 3px; /* Inline help styling */
+    position: relative; 
+    top: 3px; 
 }
 
 .input-box5 {
     text-align: center;
     width: 400px;
-    margin: 20px auto;
-    font-size: 14px; /* Styling for the input container */
-}
-
-.forgot-password {
-    margin-right: 755px;
-    font-weight: bold;
-    font-size: 13px;
-    color: black;
-    text-decoration: none; /* Forgot password link styling */
-    margin-left: auto;
-}
-
-.input-box3 {
-    font-size: 13px;
-    font-weight: bold;
-    margin-top: 8px;
-    margin-left: 762px;
-    vertical-align: middle;
-    color: black;
-    cursor: pointer; /* Styling for input options */
+    margin: 20px auto; 
+    font-size: 14px; 
 }
 
 .input-box4 {
@@ -191,23 +185,33 @@ label {
     font-size: 13px;
     font-weight: bold;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    white-space: nowrap; /* Flexbox container for layout */
-    padding: 0 20px;
+    justify-content: space-between;  
+    align-items: center;             
+    width: 100%;                     
+    max-width: 400px;               
+    margin: 0 auto;                 
+    white-space: nowrap;           
+    padding: 0 20px;                
 }
 
-#togglePassword, #toggleConfirmPassword {
+#togglePassword {
     position: absolute;
-    left: 360px;
+    left: 360px; 
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 16px;
-    color: black; /* Style for password toggle icons */
+    color: black;
+}
+
+#toggleConfirmPassword {
+    position: absolute;
+    left: 360px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 16px;
+    color: black;
 }
 
 footer {
@@ -217,30 +221,30 @@ footer {
     padding: 10px 20px;
     background-color: transparent;
     font-size: 14px;
-    margin-top: 240px;
+    margin-top: 240px; 
     margin-left: 100px;
-    margin-right: 100px; /* Footer layout and positioning */
+    margin-right: 100px;
 }
 
 .footer-links {
     display: flex;
-    gap: 30px; /* Footer links layout */
+    gap: 30px;
 }
 
 .footer-links a {
     text-decoration: none;
     color: black;
-    font-weight: bold; /* Styling for footer links */
+    font-weight: bold;
 }
 
 .footer-rights {
     text-align: right;
     color: black;
-    font-weight: bold; /* Rights text styling */
+    font-weight: bold;
 }
 
 footer p {
-    margin: 0; /* Remove margin for footer paragraph */
+    margin: 0; 
 }
 
 .continue {
@@ -260,9 +264,16 @@ footer p {
     border: none;
     outline: none;
     padding: 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Button styling */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .continue:hover {
-    background-color: #2878c3; /* Hover state for continue button */
+    background-color: #2878c3;
+}
+
+#password-strength,#password-match {
+    position: absolute; 
+    font-size: 13px;
+    text-align: center;
+    left: 10px;
 }

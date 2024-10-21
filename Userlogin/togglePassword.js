@@ -1,59 +1,53 @@
-// error handler added
-function handleError(error, context = '') {
-    console.error(`Error in ${context}:`, error); 
-    alert(`An error occurred in ${context}. Please try again.`); 
-}
-
 document.addEventListener('DOMContentLoaded', function () {
-    try {
-        // Password field logic
-        const togglePassword = document.querySelector('#togglePassword');
-        const password = document.querySelector('#password');
+    // Select elements for password toggle functionality
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
 
-        if (togglePassword && password) {
-            togglePassword.addEventListener('click', function () {
-                try {
-                    const isPasswordVisible = password.getAttribute('type') === 'text';
-                    password.setAttribute('type', isPasswordVisible ? 'password' : 'text');
-                    togglePassword.classList.remove('icon-view_off', 'icon-view-2');
+    // Add click event listener for password visibility toggle
+    togglePassword.addEventListener('click', function () {
+        // Check if the password is currently visible
+        const isPasswordVisible = password.getAttribute('type') === 'text';
 
-                    if (isPasswordVisible) {
-                        togglePassword.classList.add('icon-view-2');
-                    } else {
-                        togglePassword.classList.add('icon-view_off');
-                    }
-                } catch (error) {
-                    handleError(error, 'Password toggle click');
-                }
-            });
+        // Toggle the input type between 'password' and 'text'
+        password.setAttribute('type', isPasswordVisible ? 'password' : 'text');
+
+        // Remove previous icon classes to ensure proper switch
+        togglePassword.classList.remove('icon-view_off', 'icon-view-2');
+
+        // Add appropriate icon class based on visibility state
+        if (isPasswordVisible) {
+            togglePassword.classList.add('icon-view-2'); // Closed eye icon
         } else {
-            console.warn('Password or togglePassword element not found, skipping password toggle logic.');
+            togglePassword.classList.add('icon-view_off'); // Open eye icon
         }
 
-        // Confirm password field logic
-        const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
-        const confirmPassword = document.querySelector('#confirmPassword');
+        // Log the updated class list to the console for debugging
+        console.log(togglePassword.classList);
+    });
 
-        if (toggleConfirmPassword && confirmPassword) {
-            toggleConfirmPassword.addEventListener('click', function () {
-                try {
-                    const isConfirmPasswordVisible = confirmPassword.getAttribute('type') === 'text';
-                    confirmPassword.setAttribute('type', isConfirmPasswordVisible ? 'password' : 'text');
-                    toggleConfirmPassword.classList.remove('icon-view_off', 'icon-view-2');
+    // Select elements for confirm password toggle functionality
+    const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+    const confirmPassword = document.querySelector('#confirmPassword');
 
-                    if (isConfirmPasswordVisible) {
-                        toggleConfirmPassword.classList.add('icon-view-2');
-                    } else {
-                        toggleConfirmPassword.classList.add('icon-view_off');
-                    }
-                } catch (error) {
-                    handleError(error, 'Confirm password toggle click');
-                }
-            });
+    // Add click event listener for confirm password visibility toggle
+    toggleConfirmPassword.addEventListener('click', function () {
+        // Check if the confirm password is currently visible
+        const isConfirmPasswordVisible = confirmPassword.getAttribute('type') === 'text';
+
+        // Toggle the input type between 'password' and 'text'
+        confirmPassword.setAttribute('type', isConfirmPasswordVisible ? 'password' : 'text');
+
+        // Remove previous icon classes to ensure proper switch
+        toggleConfirmPassword.classList.remove('icon-view_off', 'icon-view-2');
+
+        // Add appropriate icon class based on visibility state
+        if (isConfirmPasswordVisible) {
+            toggleConfirmPassword.classList.add('icon-view-2'); // Closed eye icon
         } else {
-            console.warn('ConfirmPassword or toggleConfirmPassword element not found, skipping confirm password toggle logic.');
+            toggleConfirmPassword.classList.add('icon-view_off'); // Open eye icon
         }
-    } catch (error) {
-        handleError(error, 'Initialization error');
-    }
+
+        // Log the updated class list to the console for debugging
+        console.log(toggleConfirmPassword.classList);
+    });
 });

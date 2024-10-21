@@ -1,0 +1,9 @@
+fastapi
+tortoise-orm
+uvicorn
+pydantic_settings
+aiomysql
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+pydantic[email]

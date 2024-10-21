@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<style>
+    /* General body styling for alignment and background */
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+        flex-direction: column;
+    }
+
+    /* Fixed header styling */
+    .header {
+        position: fixed;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+        font-weight: bold;
+        font-style: italic;
+        text-shadow: 3px 3px 5px rgba(75, 72, 72, 0.5);
+        z-index: 1000; /* Ensure header stays on top */
+    }
+
+    .header h1 {
+        font-style: italic;
+        font-weight: bold;
+        margin: 0; /* Remove default margin */
+    }
+
+    /* Main container styling */
+    .container {
+        width: 100%;
+        max-width: 400px; /* Set max width for better responsiveness */
+        padding: 30px;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* User information section styling */
+    .user-info {
+        width: 100%;
+        margin-top: -100px; /* Adjust position relative to the header */
+        margin-bottom: 20px;
+    }
+
+    .user-info h4 {
+        font-size: 17px;
+        font-weight: bold;
+        margin: 15px 0;
+        color: black;
+        text-align: left; /* Align text to the left */
+    }
+
+    /* Logout button styling */
+    button {
+        width: 100%; /* Full width button */
+        height: 36px;
+        border-radius: 12px;
+        font-weight: bold;
+        background-color: rgba(135, 206, 250, 0.6);
+        color: black;
+        cursor: pointer;
+        text-align: center;
+        padding: 0;
+        border: none;
+        outline: none;
+    }
+
+    button:hover {
+        background-color: #66b1ff; /* Change color on hover */
+    }
+</style>
+
+<body>
+    <div class="container">
+        <!-- Header section -->
+        <div class="header">
+            <h1>User Profile</h1>
+        </div>
+
+        <!-- User information section -->
+        <div class="user-info">
+            <h4>Username: <span id="username"></span></h4>
+            <h4>Email: <span id="email"></span></h4>
+        </div>
+
+        <!-- Logout button -->
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        /**
+         * Fetch user information from the server using the stored token.
+         * If the token is invalid or expired, redirect to the login page.
+         */
+        function fetchUserInfo() {
+            fetch('http://localhost:8001/users/users/me', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('Token') // Retrieve token from localStorage
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user information'); // Handle non-OK responses
+                }
+                return response.json(); // Parse JSON response
+            })
+            .then(data => {
+                // Display user information on the page
+                document.getElementById('username').textContent = data.username;
+                document.getElementById('email').textContent = data.email;
+            })
+            .catch(error => {
+                console.error('Error:', error); // Log the error
+                alert('Session expired. Please log in again.'); // Inform the user
+                window.location.href = 'index.html'; // Redirect to login page
+            });
+        }
+
+        /**
+         * Logout the user by removing the token from localStorage
+         * and redirecting to the login page.
+         */
+        function logout() {
+            localStorage.removeItem('Token'); // Clear stored token
+            alert('You have been logged out.'); // Inform the user
+            window.location.href = 'index.html'; // Redirect to login page
+        }
+
+        // Fetch user information when the page loads
+        window.onload = fetchUserInfo;
+    </script>
+</body>
+
+</html>
